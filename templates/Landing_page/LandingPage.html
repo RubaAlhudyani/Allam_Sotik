@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>صوتـك</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lateef', sans-serif;
+      background-color: #dff1f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      direction: rtl;
+      color: #6c757d;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .logo img {
+      height: 100px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #7f8c8d;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <a href="{{ url_for('account_page') }}">
+        <img src="/static/images/Sotik-log.png" alt="صوتـك Logo" title="صوتـك">
+    </a>
+            </div>
+    <p class="tagline">خطوة نحو إتقان لغتنا بثقة</p>
+  </div>
+</body>
+</html>
