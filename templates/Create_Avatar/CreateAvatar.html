@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم الصورة</title>
+    <style>
+        /* Importing the Lateef font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Lateef&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lateef', sans-serif;
+        }
+
+        body {
+            font-family: 'Lateef', sans-serif;
+            background-color: #dff1f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+            color: #6c757d;
+        }
+
+        /* Container Centering */
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Header */
+        .header {
+            font-size: 1.8rem;
+            color: #4a4a4a;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .camera-icon, .avatar-icon {
+            width: 60px;
+            height: 60px;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-item {
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .footer-item img {
+            width: 30px;
+            height: 30px;
+            display: block;
+            margin: 0 auto 5px auto;
+        }
+
+        .footer-item span {
+            font-size: 14px;
+        }
+
+        /* Video container styles */
+        .video-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        video {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Avatar circle style */
+        #avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            margin: 10px auto;
+        }
+
+        /* Canvas styles to fit inside the circle */
+        #canvas {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7a7a7a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-text {
+            margin-top: 2px;
+            font-size: 1.2rem;
+            color: #7a7a7a;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover .nav-text {
+            color: blue;
+        }
+
+        /* Modal styling */
+        #camera-options {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #camera-options button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+            background-color: #2EBBB2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #camera-options button:hover {
+            background-color: #A14377;
+        }
+
+        /* Hidden File Input */
+        #file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <strong>
+        <div class="header">صمم صورتك كما تحب!</div>
+        <div class="title">التقط صورة لنفسك لتصمم لك افتارك..</div>
+    </strong>
+
+    <!-- Camera Icon Trigger -->
+    <div class="circle" id="camera">
+        <img src="/static/images/camera.png" alt="Camera Icon" class="camera-icon">
+    </div>
+    <div class="description">إضغط لإلتقاط الصورة</div>
+
+    <!-- Camera Options Modal -->
+    <div class="modal" id="camera-options">
+        <button id="take-photo">التقاط صورة</button>
+        <button id="upload-photo">رفع صورة من الألبوم</button>
+    </div>
+
+    <!-- Display Captured Avatar -->
+    <div class="circle" id="avatar">
+        <canvas id="canvas" class="avatar-icon"></canvas>
+    </div>
+    <div class="description">حسناً، ها هو الافتار الخاص بك!</div>
+</div>
+
+<!-- Hidden File Input for Uploading Image -->
+<input type="file" id="file-input" accept="image/*">
+
+<!-- Video Preview for Camera -->
+<div class="video-container" style="display:none;">
+    <video id="video" autoplay></video>
+    <button id="capture" onclick="capturePhoto()">التقاط الصورة</button>
+</div>
+
+<!-- Bottom Navigation Bar -->
+<div class="navbar">
+    <div class="nav-item">
+        <a href="{{ url_for('evaluate_pronounce') }}">
+            <img src="/static/images/sotik_icon.png" alt="صوتـك">
+            <p class="nav-text">صوتـك</p>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="{{ url_for('chat_page') }}">
+            <img src="/static/images/Question_icon.png" alt="أسألني">
+            <p class="nav-text">أسألني</p>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="{{ url_for('learning_journey') }}">
+            <img src="/static/images/journey_icon.png" alt="رحلتي">
+            <p class="nav-text">رحلتي</p>
+        </a>
+    </div>
+    <div class="nav-item">
+        <a href="{{ url_for('account_page') }}">
+            <img src="/static/images/myacc_icon.png" alt="حسابي">
+            <p class="nav-text">حسابي</p>
+        </a>
+    </div>
+</div>
+
+<script>
+    const cameraButton = document.getElementById('camera');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const videoContainer = document.querySelector('.video-container');
+    const captureButton = document.getElementById('capture');
+    const cameraOptionsModal = document.getElementById('camera-options');
+    const takePhotoButton = document.getElementById('take-photo');
+    const uploadPhotoButton = document.getElementById('upload-photo');
+    const fileInput = document.getElementById('file-input');
+    const avatarCircle = document.getElementById('avatar');
+
+    cameraButton.addEventListener('click', () => {
+        cameraOptionsModal.style.display = 'block';
+    });
+
+    takePhotoButton.addEventListener('click', startCamera);
+    uploadPhotoButton.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', handleFileUpload);
+
+    function startCamera() {
+        cameraOptionsModal.style.display = 'none';
+        videoContainer.style.display = 'block';
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            });
+    }
+
+    function capturePhoto() {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        videoContainer.style.display = 'none';
+        avatarCircle.style.display = 'block';
+    }
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const image = new Image();
+                image.onload = function () {
+                    const context = canvas.getContext('2d');
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    avatarCircle.style.display = 'block';
+                };
+                image.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            cameraOptionsModal.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
